@@ -32,7 +32,8 @@
     ],
     "class-methods-use-this": "off",
     "prettier/prettier": "error",
-    "camelcase": "off"
+    "camelcase": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off"
   },
   "settings": {
     "import/resolver": {
