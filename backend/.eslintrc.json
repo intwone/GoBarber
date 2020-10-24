@@ -33,7 +33,10 @@
     "class-methods-use-this": "off",
     "prettier/prettier": "error",
     "camelcase": "off",
-    "@typescript-eslint/explicit-module-boundary-types": "off"
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-unused-vars": ["error", {
+      "argsIgnorePattern": "_"
+    }]
   },
   "settings": {
     "import/resolver": {
