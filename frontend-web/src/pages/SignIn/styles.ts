@@ -8,6 +8,10 @@ export const Container = styled.div`
 
   display: flex;
   align-items: stretch;
+
+  @media (max-height: 650px) {
+    height: 100%;
+  }
 `;
 
 export const Content = styled.div`
