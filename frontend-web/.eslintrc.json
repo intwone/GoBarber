@@ -27,6 +27,7 @@
     "rules": {
       "prettier/prettier": "error",
       "react-hooks/rules-of-hooks": "error",
+      "@typescript-eslint/no-empty-function": "off",
       "no-use-before-define": "off",
       "no-unused-expressions": "off",
       "react/jsx-props-no-spreading": "off",
