@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 import { Platform } from 'react-native';
-import { getBottomSpace } from 'react-native-iphone-x-helper'
+import { getBottomSpace } from 'react-native-iphone-x-helper';
 
 export const Container = styled.View`
   flex: 1;
@@ -45,6 +45,5 @@ export const CreateAccountButtonText = styled.Text`
   color: #ff9000;
   font-size: 18px;
   font-family: 'RobotoSlab-Regular';
-  margin-left: 15px
+  margin-left: 15px;
 `;
-
