@@ -1,11 +1,17 @@
 import AppError from '@shared/errors/AppError';
 import FakeUserRepository from '../repositories/fakes/FakeUserRepository';
 import CreateUserService from './CreateUserService';
+import FakeHashProvider from '../providers/HashProvider/implementations/BCryptHashProvider';
 
 describe('CreateUser', () => {
   it('should be able to create a new user', async () => {
     const fakeUserRepository = new FakeUserRepository();
-    const createUser = new CreateUserService(fakeUserRepository);
+    const fakeHashProvider = new FakeHashProvider();
+
+    const createUser = new CreateUserService(
+      fakeUserRepository,
+      fakeHashProvider,
+    );
 
     const user = await createUser.execute({
       name: 'Cassio Oliveira Silva',
@@ -18,7 +24,12 @@ describe('CreateUser', () => {
 
   it('should not be able to create user with email alread existent', async () => {
     const fakeUserRepository = new FakeUserRepository();
-    const createUser = new CreateUserService(fakeUserRepository);
+    const fakeHashProvider = new FakeHashProvider();
+
+    const createUser = new CreateUserService(
+      fakeUserRepository,
+      fakeHashProvider,
+    );
 
     await createUser.execute({
       name: 'Cassio Oliveira Silva',
