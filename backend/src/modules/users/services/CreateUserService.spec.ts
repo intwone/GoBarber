@@ -3,16 +3,19 @@ import FakeUserRepository from '../repositories/fakes/FakeUserRepository';
 import CreateUserService from './CreateUserService';
 import FakeHashProvider from '../providers/HashProvider/implementations/BCryptHashProvider';
 
+let fakeUserRepository: FakeUserRepository;
+let fakeHashProvider: FakeHashProvider;
+let createUser: CreateUserService;
+
 describe('CreateUser', () => {
+  beforeEach(() => {
+    fakeUserRepository = new FakeUserRepository();
+    fakeHashProvider = new FakeHashProvider();
+
+    createUser = new CreateUserService(fakeUserRepository, fakeHashProvider);
+  });
+
   it('should be able to create a new user', async () => {
-    const fakeUserRepository = new FakeUserRepository();
-    const fakeHashProvider = new FakeHashProvider();
-
-    const createUser = new CreateUserService(
-      fakeUserRepository,
-      fakeHashProvider,
-    );
-
     const user = await createUser.execute({
       name: 'Cassio Oliveira Silva',
       email: 'cassiointw1993@gmail.com',
@@ -23,14 +26,6 @@ describe('CreateUser', () => {
   });
 
   it('should not be able to create user with email alread existent', async () => {
-    const fakeUserRepository = new FakeUserRepository();
-    const fakeHashProvider = new FakeHashProvider();
-
-    const createUser = new CreateUserService(
-      fakeUserRepository,
-      fakeHashProvider,
-    );
-
     await createUser.execute({
       name: 'Cassio Oliveira Silva',
       email: 'cassiointw1993@gmail.com',
