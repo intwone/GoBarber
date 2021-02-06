@@ -2,6 +2,7 @@ import { startOfHour, isBefore, getHours } from 'date-fns';
 import { inject, injectable } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
+// import INotificationsRepository from '@modules/notifications/repositories/INotificationsRepository';
 import Appointment from '../infra/typeorm/entities/Appointment';
 import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
 
@@ -15,7 +16,7 @@ interface IRequest {
 class CreateAppointmentService {
   constructor(
     @inject('AppointmentsRepository')
-    private appointmentsRepository: IAppointmentsRepository,
+    private appointmentsRepository: IAppointmentsRepository, // @inject('NotificationsRepository') // private notificationsRepository: INotificationsRepository,
   ) {}
 
   public async execute({
@@ -35,7 +36,7 @@ class CreateAppointmentService {
 
     if (
       getHours(appointmentStartHour) < 8 ||
-      getHours(appointmentStartHour) > 18
+      getHours(appointmentStartHour) > 17
     ) {
       throw new AppError(
         'You can only create appointments between 8am and 5pm',
@@ -55,6 +56,13 @@ class CreateAppointmentService {
       user_id,
       date: appointmentStartHour,
     });
+
+    // const dateFormatted = format(appointmentStartHour, "dd/MM/yyyy 'às' HH:mm");
+
+    // await this.notificationsRepository.create({
+    //   recipient_id: provider_id,
+    //   content: `Novo agendamento para dia ${dateFormatted}`,
+    // });
 
     return appointment;
   }
