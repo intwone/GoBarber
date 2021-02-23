@@ -13,8 +13,8 @@ export default {
 
   defaults: {
     from: {
-      email: 'e-mail configured',
-      name: 'e-mail name',
+      email: 'contato@intwone.dev',
+      name: 'Cassio Oliveira Silva',
     },
   },
 } as IMailConfig;

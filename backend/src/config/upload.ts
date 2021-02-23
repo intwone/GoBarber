@@ -41,7 +41,7 @@ export default {
   config: {
     disk: {},
     aws: {
-      bucket: 'app-gobarber',
+      bucket: 'gobarber-intw',
     },
   },
 } as IUploadConfig;
