@@ -40,7 +40,7 @@ class CreateUserService {
       email,
       password: hasedPassword,
     });
-
+  
     await this.cacheProvider.invalidatePrefix('provider-list');
 
     return user;
