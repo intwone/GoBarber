@@ -17,13 +17,13 @@ const Route: React.FC<RouteProps> = ({
   component: Component,
   ...rest
 }) => {
-  const { mappedUser } = useAuth();
+  const { user } = useAuth();
 
   return (
     <RouteDOMRoute
       {...rest}
       render={({ location }) => {
-        return isPrivate === !!mappedUser ? (
+        return isPrivate === !!user ? (
           <Component />
         ) : (
           <Redirect

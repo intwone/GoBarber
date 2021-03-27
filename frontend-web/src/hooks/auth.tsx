@@ -1,9 +1,16 @@
 import React, { createContext, useCallback, useContext, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import api from '../services/apiClient';
+
+interface User {
+  id: string;
+  name: string;
+  avatar_url: string;
+}
 
 interface AuthState {
   token: string;
-  mappedUser: object;
+  user: User;
 }
 
 interface SignInCredentials {
@@ -12,7 +19,7 @@ interface SignInCredentials {
 }
 
 interface AuthContextData {
-  mappedUser: object;
+  user: User;
   signIn(credentials: SignInCredentials): Promise<void>;
   signOut(): void;
 }
@@ -20,12 +27,14 @@ interface AuthContextData {
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 const AuthProvider: React.FC = ({ children }) => {
+  const history = useHistory();
+
   const [data, setData] = useState<AuthState>(() => {
     const token = localStorage.getItem('@GoBarber:token');
-    const mappedUser = localStorage.getItem('@GoBarber:mappedUser');
+    const user = localStorage.getItem('@GoBarber:user');
 
-    if (token && mappedUser) {
-      return { token, mappedUser: JSON.parse(mappedUser) };
+    if (token && user) {
+      return { token, user: JSON.parse(user) };
     }
 
     return {} as AuthState;
@@ -37,25 +46,25 @@ const AuthProvider: React.FC = ({ children }) => {
       password,
     });
 
-    const { token, mappedUser } = response.data;
+    const { token, user } = response.data;
 
     localStorage.setItem('@GoBarber:token', token);
-    localStorage.setItem('@GoBarber:mappedUser', JSON.stringify(mappedUser));
+    localStorage.setItem('@GoBarber:user', JSON.stringify(user));
 
-    setData({ token, mappedUser });
+    setData({ token, user });
   }, []);
 
   const signOut = useCallback(() => {
     localStorage.removeItem('@GoBarber:token');
-    localStorage.removeItem('@GoBarber:mappedUser');
+    localStorage.removeItem('@GoBarber:user');
+
+    history.push('/');
 
     setData({} as AuthState);
-  }, []);
+  }, [history]);
 
   return (
-    <AuthContext.Provider
-      value={{ mappedUser: data.mappedUser, signIn, signOut }}
-    >
+    <AuthContext.Provider value={{ user: data.user, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );
